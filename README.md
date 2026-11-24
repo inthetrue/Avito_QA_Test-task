@@ -63,7 +63,9 @@
 
 ## Как запустить тесты
 
-Потребуются Python 3.10 или новее и доступ к `https://qa-internship.avito.com`. Команды ниже предназначены для macOS и Linux.
+Потребуются Python 3.10 или новее и доступ к `https://qa-internship.avito.com`. Откройте терминал в корневой папке проекта и используйте команды для своей системы.
+
+### macOS и Linux
 
 1. Откройте терминал в корневой папке проекта.
 2. Создайте и активируйте виртуальное окружение:
@@ -106,6 +108,54 @@ python -m pytest -q test_api.py::test_register_new_user
 
 ```bash
 python -m pytest -q test_client_unit.py
+```
+
+### Windows (PowerShell)
+
+1. Создайте виртуальное окружение:
+
+   ```powershell
+   py -3 -m venv .venv
+   ```
+
+   Если команда `py` недоступна, используйте `python -m venv .venv`.
+
+2. Установите зависимости:
+
+   ```powershell
+   .\.venv\Scripts\python.exe -m pip install -r requirements.txt
+   ```
+
+3. Запустите весь набор с сохранением отчёта. Команда вводится одной строкой:
+
+   ```powershell
+   .\.venv\Scripts\python.exe -m pytest -q --reruns 3 --reruns-delay 2 --only-rerun "Нет ответа стенда" --only-rerun "сетевая ошибка очистки" --junitxml=results.xml
+   ```
+
+Для Windows активация окружения не требуется: команды напрямую вызывают Python из `.venv`. Поэтому не нужно менять политику выполнения PowerShell или запускать `Activate.ps1`.
+
+Запуск без сетевых повторов:
+
+```powershell
+.\.venv\Scripts\python.exe -m pytest -q --junitxml=results.xml
+```
+
+Запуск в обратном порядке:
+
+```powershell
+.\.venv\Scripts\python.exe -m pytest -q --reverse --junitxml=results_reverse.xml
+```
+
+Запуск одного API-теста:
+
+```powershell
+.\.venv\Scripts\python.exe -m pytest -q test_api.py::test_register_new_user
+```
+
+Только локальные проверки, без доступа к стенду:
+
+```powershell
+.\.venv\Scripts\python.exe -m pytest -q test_client_unit.py
 ```
 
 Тесты используют уникальные имена и собственные объявления. Существующие данные других участников не используются. Удаление пользователей и отдельное удаление статистики коллекцией не предусмотрены.
